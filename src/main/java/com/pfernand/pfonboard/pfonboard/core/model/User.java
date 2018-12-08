@@ -1,21 +1,21 @@
 package com.pfernand.pfonboard.pfonboard.core.model;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class User {
-    private String uuid;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
-    private Instant createdAt;
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class User implements Serializable {
+    private final String uuid;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
+    private final String password;
+    private final Instant createdAt;
 }

@@ -1,6 +1,7 @@
-package com.pfernand.pfonboard.pfonboard.adapter.database;
+package com.pfernand.pfonboard.pfonboard.adapter.secondary;
 
-import com.pfernand.pfonboard.pfonboard.port.database.model.User;
+import com.pfernand.pfonboard.pfonboard.adapter.secondary.redis.OnBoardRedisDao;
+import com.pfernand.pfonboard.pfonboard.core.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

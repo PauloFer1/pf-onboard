@@ -1,7 +1,7 @@
-package com.pfernand.pfonboard.pfonboard.adapter.database;
+package com.pfernand.pfonboard.pfonboard.adapter.secondary.redis;
 
-import com.pfernand.pfonboard.pfonboard.port.database.OnBoardDao;
-import com.pfernand.pfonboard.pfonboard.port.database.model.User;
+import com.pfernand.pfonboard.pfonboard.core.model.User;
+import com.pfernand.pfonboard.pfonboard.port.secondary.OnBoardDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.HashOperations;

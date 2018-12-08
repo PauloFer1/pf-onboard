@@ -1,6 +1,7 @@
-package com.pfernand.pfonboard.pfonboard.port.database;
+package com.pfernand.pfonboard.pfonboard.port.secondary;
 
-import com.pfernand.pfonboard.pfonboard.port.database.model.User;
+
+import com.pfernand.pfonboard.pfonboard.core.model.User;
 
 import java.util.List;
 import java.util.Optional;

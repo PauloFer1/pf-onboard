@@ -1,6 +1,6 @@
 package com.pfernand.pfonboard.pfonboard.config;
 
-import com.pfernand.pfonboard.pfonboard.port.database.model.User;
+import com.pfernand.pfonboard.pfonboard.core.model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;

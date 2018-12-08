@@ -1,9 +1,7 @@
-package com.pfernand.pfonboard.pfonboard.adapter.rest;
+package com.pfernand.pfonboard.pfonboard.adapter.primary;
 
 import com.pfernand.pfonboard.pfonboard.core.OnBoardService;
 import com.pfernand.pfonboard.pfonboard.core.model.User;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

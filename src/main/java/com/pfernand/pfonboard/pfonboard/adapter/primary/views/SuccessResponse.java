@@ -1,4 +1,4 @@
-package com.pfernand.pfonboard.pfonboard.adapter.rest.views;
+package com.pfernand.pfonboard.pfonboard.adapter.primary.views;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
