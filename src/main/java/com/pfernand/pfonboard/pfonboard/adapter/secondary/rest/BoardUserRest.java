@@ -35,18 +35,16 @@ public class BoardUserRest implements BoardUser {
     public void createUser(User user) throws UnableToCreateUserException {
         log.info("Onboarding user {}", user);
         try {
-            ResponseEntity<com.pfernand.pfonboard.pfonboard.core.model.User> responseEntity = restTemplate.exchange(userServiceUri, HttpMethod.POST, generateRequest(user), com.pfernand.pfonboard.pfonboard.core.model.User.class);
+            ResponseEntity<User> responseEntity = restTemplate.exchange(userServiceUri, HttpMethod.POST, generateRequest(user), User.class);
         } catch (Exception ex) {
             throw new UnableToCreateUserException(user.getEmail(), ex);
         }
     }
 
-    private HttpEntity<com.pfernand.pfonboard.pfonboard.core.model.User> generateRequest(final com.pfernand.pfonboard.pfonboard.core.model.User user) {
+    private HttpEntity<User> generateRequest(final User user) {
         final HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.set(HttpHeaders.AUTHORIZATION, BEARER + appToken.generateAppToken());
-        HttpEntity<com.pfernand.pfonboard.pfonboard.core.model.User> request = new HttpEntity<>(user, httpHeaders);
-        log.info(request.getHeaders().toString());
-        return request;
+        return new HttpEntity<>(user, httpHeaders);
     }
 }
