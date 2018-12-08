@@ -10,6 +10,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.redis.core.HashOperations;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -19,6 +21,9 @@ public class OnBoardRedisDaoTest {
 
     private static final String EMAIL = "email@mail.com";
     private final static String USER_KEY = "USER";
+    final User user = User.builder()
+            .email(EMAIL)
+            .build();
 
     @Mock
     private HashOperations<String, String, User> hashOperations;
@@ -29,10 +34,6 @@ public class OnBoardRedisDaoTest {
     @Test
     public void cacheUserCallsPut() {
         // Given
-        final User user = User.builder()
-                .email(EMAIL)
-                .build();
-
         // When
         onBoardRedisDao.cacheUser(user);
 
@@ -44,9 +45,6 @@ public class OnBoardRedisDaoTest {
     @Test
     public void getUserFromEmailReturnEmptyOptional() {
         // Given
-        final User user = User.builder()
-                .email(EMAIL)
-                .build();
         // When
         Mockito.when(hashOperations.get(USER_KEY, EMAIL))
                 .thenReturn(user);
@@ -54,5 +52,21 @@ public class OnBoardRedisDaoTest {
 
         // Then
         assertEquals(Optional.of(user), optionalUser);
+    }
+
+    @Test
+    public void deleteUsers() {
+        // Given
+        final List<User> users = Collections.singletonList(user);
+
+        // When
+        Mockito.when(hashOperations.delete(USER_KEY, users.stream().map(User::getEmail).toArray()))
+                .thenReturn(1L);
+        Long result = onBoardRedisDao.deleteUsers(users);
+
+        // Then
+        assertEquals(1, result.intValue());
+        Mockito.verify(hashOperations, Mockito.times(1))
+                .delete(USER_KEY, users.stream().map(User::getEmail).toArray());
     }
 }
