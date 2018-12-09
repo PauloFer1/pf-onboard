@@ -26,7 +26,7 @@ public class SecurityTokenConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/onboard").permitAll()
+                .antMatchers(HttpMethod.POST, "/onboard", "/onboard/email").permitAll()
                 .anyRequest().authenticated();
     }
 

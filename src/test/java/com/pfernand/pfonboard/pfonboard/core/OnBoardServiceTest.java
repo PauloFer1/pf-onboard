@@ -67,18 +67,25 @@ public class OnBoardServiceTest {
     @Test
     public void onboardUser() {
         // Given
-        final User user = User.builder().email("test").build();
+        final User user = User.builder().email("test").password("pass").build();
+        final User cachedUser = User.builder()
+                .firstName("Paulo")
+                .lastName("Fernandes")
+                .password("pass")
+                .email("test")
+                .build();
 
         // When
         Mockito.when(validateUserOnboard.validatePassword(user))
                 .thenReturn(true);
         Mockito.when(onBoardDao.getUserFromEmail(user.getEmail()))
-                .thenReturn(Optional.of(user));
+                .thenReturn(Optional.of(cachedUser));
         User userResult = onBoardService.onboardUser(user);
 
         // Then
-        Mockito.verify(validateUserOnboard, Mockito.times(1)).validatePassword(user);
-        Mockito.verify(boardUser, Mockito.times(1)).createUser(user);
-        assertEquals(user, userResult);
+        Mockito.verify(onBoardDao, Mockito.times(1)).getUserFromEmail(user.getEmail());
+        Mockito.verify(validateUserOnboard, Mockito.times(1)).validatePassword(cachedUser);
+        Mockito.verify(boardUser, Mockito.times(1)).createUser(cachedUser);
+        assertEquals(cachedUser, userResult);
     }
 }

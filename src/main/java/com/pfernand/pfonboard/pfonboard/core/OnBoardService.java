@@ -28,9 +28,10 @@ public class OnBoardService {
 
     public User onboardUser(final User user) {
         log.info("Onboarding user {}", user);
-        validateUserOnboard.validatePassword(getCachedUser(user));
-        boardUser.createUser(user);
-        return user;
+        final User cachedUser = getCachedUser(user);
+        validateUserOnboard.validatePassword(cachedUser);
+        boardUser.createUser(cachedUser);
+        return cachedUser;
     }
 
     private User getCachedUser(final User user) {
