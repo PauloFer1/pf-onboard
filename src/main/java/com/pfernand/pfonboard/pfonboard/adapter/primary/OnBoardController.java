@@ -21,6 +21,19 @@ public class OnBoardController {
 
     private final OnBoardService onBoardService;
 
+    @ApiOperation("Start Onboarding")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Ok"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 500, message = "Exception"),
+    })
+    @RequestMapping(value = "/onboard/email", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<User> startOnboard(@RequestBody final User user) {
+        log.info("POST /onboard with params {}", user.toString());
+        return ResponseEntity.ok(onBoardService.startOnboarding(user));
+
+    }
+
     @ApiOperation("OnBoard a new User")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Ok"),

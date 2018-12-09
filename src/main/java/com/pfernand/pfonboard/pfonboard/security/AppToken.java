@@ -12,15 +12,20 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class AppToken {
 
+    private static final String SUBJECT = "admin";
+    private static final String CLAIM_PROPERTY = "authorities";
+    private static final String CLAIM_VALUE = "ROLE_ADMIN";
+    private static final int EXPIRATION_TIMES = 1000;
+
     private final JwtConfig jwtConfig;
 
     public String generateAppToken() {
         Long now = System.currentTimeMillis();
         return Jwts.builder()
-                .setSubject("admin")
-                .claim("authorities", Collections.singletonList("ROLE_ADMIN"))
+                .setSubject(SUBJECT)
+                .claim(CLAIM_PROPERTY, Collections.singletonList(CLAIM_VALUE))
                 .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))
+                .setExpiration(new Date(now + jwtConfig.getExpiration() * EXPIRATION_TIMES))
                 .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
                 .compact();
     }
