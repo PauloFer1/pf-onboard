@@ -1,17 +1,29 @@
 package com.pfernand.pfonboard.pfonboard.core.validation;
 
+import com.pfernand.pfonboard.pfonboard.core.exception.EmailAlreadyRegisteredException;
 import com.pfernand.pfonboard.pfonboard.core.exception.InvalidEmailException;
 import com.pfernand.pfonboard.pfonboard.core.exception.InvalidNameException;
 import com.pfernand.pfonboard.pfonboard.core.exception.InvalidPasswordException;
 import com.pfernand.pfonboard.pfonboard.core.model.User;
+import com.pfernand.pfonboard.pfonboard.port.secondary.UserCheck;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertTrue;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ValidateUserOnboardTest {
 
-    private final ValidateUserOnboard validateUserOnboard = new ValidateUserOnboard();
+    @Mock
+    private UserCheck userCheck;
+
+    @InjectMocks
+    private ValidateUserOnboard validateUserOnboard;
 
     @Test
     public void validateEmailAndNamesWithNullEmailThrowsException() {
@@ -93,6 +105,24 @@ public class ValidateUserOnboardTest {
     }
 
     @Test
+    public void validateEmailAndNamesWithAlreadyRegisteredThrowsException() {
+        // Given
+        final User user = User.builder()
+                .firstName("Paulo")
+                .lastName("Fernandes")
+                .email("paulo@mail.pt")
+                .build();
+
+        // When
+        Mockito.when(userCheck.isEmailRegistered(user.getEmail()))
+                .thenReturn(true);
+        // Then
+        assertThatExceptionOfType(EmailAlreadyRegisteredException.class)
+                .isThrownBy(() -> validateUserOnboard.validateEmailAndNames(user))
+                .withMessage("Email: paulo@mail.pt already associated to a user.");
+    }
+
+    @Test
     public void validateEmailAndNamesWithNullFirstNameThrowsException() {
         // Given
         final User user = User.builder()
@@ -101,6 +131,9 @@ public class ValidateUserOnboardTest {
                 .build();
 
         // When
+        Mockito.when(userCheck.isEmailRegistered(user.getEmail()))
+                .thenReturn(false);
+
         // Then
         assertThatExceptionOfType(InvalidNameException.class)
                 .isThrownBy(() -> validateUserOnboard.validateEmailAndNames(user))
@@ -117,6 +150,9 @@ public class ValidateUserOnboardTest {
                 .build();
 
         // When
+        Mockito.when(userCheck.isEmailRegistered(user.getEmail()))
+                .thenReturn(false);
+
         // Then
         assertThatExceptionOfType(InvalidNameException.class)
                 .isThrownBy(() -> validateUserOnboard.validateEmailAndNames(user))
@@ -124,7 +160,7 @@ public class ValidateUserOnboardTest {
     }
 
     @Test
-    public void validateEmailAndNamesWithNullLasttNameThrowsException() {
+    public void validateEmailAndNamesWithNullLastNameThrowsException() {
         // Given
         final User user = User.builder()
                 .firstName("Paulo")
@@ -132,6 +168,9 @@ public class ValidateUserOnboardTest {
                 .build();
 
         // When
+        Mockito.when(userCheck.isEmailRegistered(user.getEmail()))
+                .thenReturn(false);
+
         // Then
         assertThatExceptionOfType(InvalidNameException.class)
                 .isThrownBy(() -> validateUserOnboard.validateEmailAndNames(user))
@@ -148,6 +187,9 @@ public class ValidateUserOnboardTest {
                 .build();
 
         // When
+        Mockito.when(userCheck.isEmailRegistered(user.getEmail()))
+                .thenReturn(false);
+
         // Then
         assertThatExceptionOfType(InvalidNameException.class)
                 .isThrownBy(() -> validateUserOnboard.validateEmailAndNames(user))
@@ -164,6 +206,8 @@ public class ValidateUserOnboardTest {
                 .build();
 
         // When
+        Mockito.when(userCheck.isEmailRegistered(user.getEmail()))
+                .thenReturn(false);
         boolean result = validateUserOnboard.validateEmailAndNames(user);
 
         // Then

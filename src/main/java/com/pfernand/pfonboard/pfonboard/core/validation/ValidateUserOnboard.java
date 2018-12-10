@@ -1,9 +1,12 @@
 package com.pfernand.pfonboard.pfonboard.core.validation;
 
+import com.pfernand.pfonboard.pfonboard.core.exception.EmailAlreadyRegisteredException;
 import com.pfernand.pfonboard.pfonboard.core.exception.InvalidEmailException;
 import com.pfernand.pfonboard.pfonboard.core.exception.InvalidNameException;
 import com.pfernand.pfonboard.pfonboard.core.exception.InvalidPasswordException;
 import com.pfernand.pfonboard.pfonboard.core.model.User;
+import com.pfernand.pfonboard.pfonboard.port.secondary.UserCheck;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
@@ -12,6 +15,7 @@ import java.util.regex.Pattern;
 
 @Slf4j
 @Named
+@RequiredArgsConstructor
 public class ValidateUserOnboard {
 
     private static final String EMPTY_PASSWORD = "Empty Password";
@@ -22,6 +26,8 @@ public class ValidateUserOnboard {
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+    private final UserCheck userCheck;
 
     public boolean validateEmailAndNames(final User user) {
         validateEmail(user.getEmail());
@@ -42,6 +48,9 @@ public class ValidateUserOnboard {
     private void validateEmail(final String email) {
         if (null == email || !Pattern.compile(EMAIL_PATTERN).matcher(email).matches()) {
             throw new InvalidEmailException(email);
+        }
+        if (userCheck.isEmailRegistered(email)) {
+            throw new EmailAlreadyRegisteredException(email);
         }
     }
 

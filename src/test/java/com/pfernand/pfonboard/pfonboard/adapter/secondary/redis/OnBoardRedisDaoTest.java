@@ -1,4 +1,4 @@
-package com.pfernand.pfonboard.pfonboard.adapter.secondary;
+package com.pfernand.pfonboard.pfonboard.adapter.secondary.redis;
 
 import com.pfernand.pfonboard.pfonboard.adapter.secondary.redis.OnBoardRedisDao;
 import com.pfernand.pfonboard.pfonboard.core.model.User;
