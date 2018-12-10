@@ -1,15 +1,20 @@
-package com.pfernand.pfonboard.pfonboard.adapter.secondary;
+package com.pfernand.pfonboard.pfonboard.adapter.secondary.redis;
 
 import com.pfernand.pfonboard.pfonboard.PfOnboardApplication;
 import com.pfernand.pfonboard.pfonboard.adapter.secondary.redis.OnBoardRedisDao;
 import com.pfernand.pfonboard.pfonboard.core.model.User;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import redis.embedded.RedisServer;
 
@@ -20,7 +25,8 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource(locations="classpath:test.properties")
 @SpringBootTest(classes = {PfOnboardApplication.class})
 public class OnBoardRedisDaoIT {
 
@@ -31,7 +37,7 @@ public class OnBoardRedisDaoIT {
             .email(EMAIL)
             .build();
 
-    private RedisServer redisServer;
+    private static RedisServer redisServer;
 
     @Autowired
     private OnBoardRedisDao onBoardRedisDao;
@@ -39,16 +45,20 @@ public class OnBoardRedisDaoIT {
     @Autowired
     private HashOperations<String, String, User> hashOperations;
 
-    @Before
-    public void setUp() throws Exception {
-        redisServer = new RedisServer(6379);
+    @BeforeClass
+    public static void setUp() throws Exception {
+        redisServer = new RedisServer(6378);
         redisServer.start();
     }
 
-    @After
-    public void tearDown() {
-        onBoardRedisDao.deleteUsers(Collections.singletonList(user));
+    @AfterClass
+    public static void StopRedis() {
         redisServer.stop();
+    }
+
+    @After
+    public void TearDown() {
+        onBoardRedisDao.deleteUsers(Collections.singletonList(user));
     }
 
     @Test
@@ -86,12 +96,12 @@ public class OnBoardRedisDaoIT {
         onBoardRedisDao.cacheUser(user3);
 
         // When
-        Long deleted = onBoardRedisDao.deleteUsers(Arrays.asList(user, user2));
+        Long deleted = onBoardRedisDao.deleteUsers(Arrays.asList(user2, user3));
         Map<String, User> users = hashOperations.entries(USER_KEY);
 
         // Then
         assertEquals(2, deleted.intValue());
         assertEquals(1, users.size());
-        assertEquals(user3, users.get("test3@mail.com"));
+        assertEquals(user, users.get(EMAIL));
     }
 }

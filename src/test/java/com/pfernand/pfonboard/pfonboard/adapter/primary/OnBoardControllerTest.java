@@ -60,5 +60,4 @@ public class OnBoardControllerTest {
                 .onboardUser(user);
         assertEquals(ResponseEntity.ok(user), response);
     }
-
 }

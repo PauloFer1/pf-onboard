@@ -76,8 +76,6 @@ public class OnBoardServiceTest {
                 .build();
 
         // When
-        Mockito.when(validateUserOnboard.validatePassword(user))
-                .thenReturn(true);
         Mockito.when(onBoardDao.getUserFromEmail(user.getEmail()))
                 .thenReturn(Optional.of(cachedUser));
         User userResult = onBoardService.onboardUser(user);
