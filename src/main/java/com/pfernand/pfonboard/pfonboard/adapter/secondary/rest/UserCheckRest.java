@@ -53,8 +53,7 @@ public class UserCheckRest implements UserCheck {
     private boolean handleHttpError(HttpClientErrorException ex) {
         if (NOT_FOUND_CODE == ex.getRawStatusCode()) {
             return false;
-        } else {
-            throw ex;
         }
+        throw ex;
     }
 }
