@@ -130,7 +130,7 @@
     <!--</profiles>-->
 
 	<build>
-        <finalName>maven-integration-testing</finalName>
+        <finalName>pf-onboard</finalName>
         <resources>
             <resource>
                 <filtering>true</filtering>
