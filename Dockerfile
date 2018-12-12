@@ -1,7 +1,10 @@
 FROM openjdk:8-jdk-alpine
 
+LABEL maintainer="paulo.r.r.fernandes@gmail.com"
+
 VOLUME /tmp
-ARG JAR_FILE
-ADD ${JAR_FILE} app.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ARG JAR_FILE=target/pf-onboard.jar
+ADD ${JAR_FILE} pf-onboard.jar
+
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/pf-onboard.jar"]
