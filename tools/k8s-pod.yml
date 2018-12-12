@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pf-onboard
+spec:
+  containers:
+  - name: pf-onboard
+    image: r.cfcr.io/paulofer1/pfernand/pf-onboard:master
+  imagePullSecrets:
+  - name: cfcr
