@@ -8,18 +8,18 @@ public class JwtConfigTest {
 
     private static final int EXPIRATION = 1000;
     private static final String SECRET = "secret";
-
-    private JwtConfig jwtConfig;
+    private static final String CHARSET = "UTF-8";
 
 
     @Test
     public void contructor() {
         // Given
         // When
-        jwtConfig = new JwtConfig(EXPIRATION, SECRET);
+        final JwtConfig jwtConfig = new JwtConfig(EXPIRATION, SECRET, CHARSET);
 
         // Then
         assertEquals(EXPIRATION, jwtConfig.getExpiration());
         assertEquals(SECRET, jwtConfig.getSecret());
+        assertEquals(CHARSET, jwtConfig.getCharset());
     }
 }

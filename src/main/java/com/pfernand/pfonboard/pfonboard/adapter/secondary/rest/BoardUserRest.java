@@ -35,7 +35,7 @@ public class BoardUserRest implements BoardUser {
     public void createUser(User user) throws UnableToCreateUserException {
         log.info("Onboarding user {}", user);
         try {
-            ResponseEntity<User> responseEntity = restTemplate.exchange(userServiceUri, HttpMethod.POST, generateRequest(user), User.class);
+            restTemplate.exchange(userServiceUri, HttpMethod.POST, generateRequest(user), User.class);
         } catch (Exception ex) {
             throw new UnableToCreateUserException(user.getEmail(), ex);
         }

@@ -1,6 +1,7 @@
 package com.pfernand.pfonboard.pfonboard.config;
 
 import com.pfernand.pfonboard.pfonboard.core.model.User;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +17,13 @@ public class RedisConfiguration {
     @Bean
     JedisConnectionFactory jedisConnectionFactory(@Value("${spring.redis.host}") final String host,
                                                   @Value("${spring.redis.port}") final int port) {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(host, port);
-        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration);
-        jedisConnectionFactory.getPoolConfig().setMaxIdle(30);
-        jedisConnectionFactory.getPoolConfig().setMinIdle(10);
+        final RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(host, port);
+        final JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration);
+        GenericObjectPoolConfig genericObjectPoolConfig = jedisConnectionFactory.getPoolConfig();
+        if (null != genericObjectPoolConfig) {
+            genericObjectPoolConfig.setMaxIdle(30);
+            genericObjectPoolConfig.setMinIdle(10);
+        }
         return jedisConnectionFactory;
     }
 
