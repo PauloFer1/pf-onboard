@@ -15,6 +15,7 @@ public class AppTokenTest {
 
     private static final int EXPIRATION = 1000;
     private static final String SECRET = "secret";
+    private static final String CHARSET = "UTF-8";
 
     @Mock
     private JwtConfig jwtConfig;
@@ -28,6 +29,7 @@ public class AppTokenTest {
         // When
         Mockito.when(jwtConfig.getExpiration()).thenReturn(EXPIRATION);
         Mockito.when(jwtConfig.getSecret()).thenReturn(SECRET);
+        Mockito.when(jwtConfig.getCharset()).thenReturn(CHARSET);
         String result = appToken.generateAppToken();
 
         // Then

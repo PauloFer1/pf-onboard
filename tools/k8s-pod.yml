@@ -5,6 +5,6 @@ metadata:
 spec:
   containers:
   - name: pf-onboard
-    image: r.cfcr.io/paulofer1/pfernand/pf-onboard:master
+    image: pfernand/pf-onboard
   imagePullSecrets:
-  - name: cfcr
+  - name: regcred
