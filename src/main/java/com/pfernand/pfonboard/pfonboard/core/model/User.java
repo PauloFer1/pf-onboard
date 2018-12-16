@@ -13,7 +13,7 @@ import java.time.Instant;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User implements Serializable {
 
-    private static final long serialVersionUID = -686567476484L;
+    private static final long serialVersionUID = 9142971353157374011L;
 
     private final String uuid;
     private final String firstName;

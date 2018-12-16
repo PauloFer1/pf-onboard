@@ -17,6 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityTokenConfiguration extends WebSecurityConfigurerAdapter {
 
+    private static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/api-docs",
+            "/health",
+            "/info",
+            "/metrics",
+            "/metrics/*"
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -27,6 +37,7 @@ public class SecurityTokenConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/onboard", "/onboard/email").permitAll()
+                .antMatchers(HttpMethod.GET, AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated();
     }
 
