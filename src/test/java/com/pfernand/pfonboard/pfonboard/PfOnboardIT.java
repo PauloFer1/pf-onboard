@@ -1,3 +1,5 @@
+package com.pfernand.pfonboard.pfonboard;
+
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.pfernand.pfonboard.pfonboard.PfOnboardApplication;
 import com.pfernand.pfonboard.pfonboard.core.model.User;
