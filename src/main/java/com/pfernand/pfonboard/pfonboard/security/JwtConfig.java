@@ -17,7 +17,7 @@ public class JwtConfig {
     @Inject
     public JwtConfig(@Value("${security.jwt.expiration:#{24*60*60}}") final int expiration,
                      @Value("${security.jwt.secret:JwtSecretKey}") final String secret,
-                     @Value("${security.jwt.secret:charset}") final String charset) {
+                     @Value("${security.jwt.secret:UTF-8}") final String charset) {
         this.expiration = expiration;
         this.secret = secret;
         this.charset = charset;

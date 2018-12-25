@@ -30,6 +30,7 @@
 		<jedis.version>2.9.0</jedis.version>
 		<embedded-redis.version>0.6</embedded-redis.version>
         <findbugs-annotation.version>2.0.1</findbugs-annotation.version>
+        <wiremock.version>2.16.0</wiremock.version>
         <!-- PLUGINS -->
         <jacoco-plugin.version>0.8.2</jacoco-plugin.version>
         <findbugs-maven-plugin.version>3.0.1</findbugs-maven-plugin.version>
@@ -113,7 +114,13 @@
 			<scope>test</scope>
 			<version>${embedded-redis.version}</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>${wiremock.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <!--<profiles>-->
         <!--<profile>-->
@@ -207,7 +214,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>post-unit-test</id>
+                        <id>tweet-unit-test</id>
                         <phase>test</phase>
                         <goals>
                             <goal>report</goal>
@@ -230,8 +237,8 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>post-integration-test</id>
-                        <phase>post-integration-test</phase>
+                        <id>tweet-integration-test</id>
+                        <phase>tweet-integration-test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
