@@ -8,3 +8,7 @@ spec:
     image: pfernand/pf-onboard
   imagePullSecrets:
   - name: regcred
+
+
+
+

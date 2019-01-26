@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pf-onboard
+spec:
+  ports:
+    - name: http
+      port: 8083
+      nodePort: 30062
+  selector:
+    app: pf-onboard
+  type: LoadBalancer

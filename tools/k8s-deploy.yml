@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pf-onboard
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pf-onboard
+    spec:
+      containers:
+      - name: pf-onboard
+        image: pfernand/pf-onboard
+        ports:
+        - containerPort: 8083
+        env:
+        - name: SPRING_REDIS_HOST
+          value: "redis-onboard"
+        - name: SPRING_REDIS_PORT
+          value: "6379"
+      imagePullSecrets:
+        - name: regcred
