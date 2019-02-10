@@ -1,5 +1,10 @@
 node {
    def mvnHome
+
+   triggers {
+       pollSCM('* * * * *')
+     }
+
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
       git 'https://github.com/PauloFer1/pf-onboard.git'
