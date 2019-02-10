@@ -30,9 +30,10 @@
 		<jedis.version>2.9.0</jedis.version>
 		<embedded-redis.version>0.6</embedded-redis.version>
         <findbugs-annotation.version>2.0.1</findbugs-annotation.version>
+        <janino.version>3.0.12</janino.version>
         <!-- PLUGINS -->
         <jacoco-plugin.version>0.8.2</jacoco-plugin.version>
-        <findbugs-maven-plugin.version>3.0.1</findbugs-maven-plugin.version>
+        <findbugs-maven-plugin.version>3.0.5</findbugs-maven-plugin.version>
         <pmd.version>3.8</pmd.version>
         <!-- CONSTANTS -->
         <skip.integration.tests>true</skip.integration.tests>
@@ -101,6 +102,11 @@
             <artifactId>annotations</artifactId>
             <version>${findbugs-annotation.version}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.codehaus.janino</groupId>-->
+            <!--<artifactId>janino</artifactId>-->
+            <!--<version>${janino.version}</version>-->
+        <!--</dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
